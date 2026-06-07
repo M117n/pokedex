@@ -14,7 +14,7 @@ st.title("🔐 Acceso al Binder")
 contrasena = st.text_input("Ingresa la contraseña para acceder a tu colección:", type="password")
 
 # Cambia "Pikachu123" por tu contraseña segura
-if contrasena != "Pikachu123":
+if contrasena != "123":
     if contrasena:
         st.error("Contraseña incorrecta.")
     st.stop() # Esto detiene la ejecución si no hay contraseña o es incorrecta
