@@ -1,21 +1,42 @@
 import streamlit as st
 import pandas as pd
 import math
-import os
 import plotly.express as px
 import requests
 import time
+from streamlit_gsheets import GSheetsConnection
 
-# --- CONFIGURACIÓN Y DATOS ---
-DATA_FILE = 'mi_pokedex_binder.csv'
+# --- CONFIGURACIÓN ---
 st.set_page_config(page_title="Gestor de Pokédex TCG", layout="wide", page_icon="📕")
+
+# --- SISTEMA DE SEGURIDAD ---
+st.title("🔐 Acceso al Binder")
+contrasena = st.text_input("Ingresa la contraseña para acceder a tu colección:", type="password")
+
+# Cambia "Pikachu123" por tu contraseña segura
+if contrasena != "Pikachu123":
+    if contrasena:
+        st.error("Contraseña incorrecta.")
+    st.stop() # Esto detiene la ejecución si no hay contraseña o es incorrecta
+
+st.success("Acceso concedido.")
+st.divider()
+
 st.title("📕 Dashboard del Binder: Pokédex Nacional")
 
-if not os.path.exists(DATA_FILE):
+# --- CONEXIÓN A GOOGLE SHEETS ---
+conn = st.connection("gsheets", type=GSheetsConnection)
+
+# Leemos la base de datos (ttl=0 asegura que siempre leamos la versión más reciente)
+try:
+    df = conn.read(worksheet="Datos", ttl=0, usecols=[0, 1, 2, 3, 4])
+    df = df.dropna(how="all") # Limpiamos filas vacías
+    if not df.empty:
+        df['Dex'] = df['Dex'].astype(int) # Aseguramos que el número Dex sea entero
+        df['Pagina'] = df['Pagina'].astype(int)
+        df['Slot'] = df['Slot'].astype(int)
+except:
     df = pd.DataFrame(columns=["Dex", "Nombre", "Pagina", "Slot", "Idioma/Nota"])
-    df.to_csv(DATA_FILE, index=False)
-else:
-    df = pd.read_csv(DATA_FILE)
 
 # --- LÓGICA DEL BINDER Y GENERACIONES ---
 def calcular_posicion(dex_num):
@@ -80,13 +101,14 @@ st.divider()
 st.header("➕ Registrar nueva carta")
 col_reg1, col_reg2 = st.columns(2)
 with col_reg1: nuevo_nombre = st.text_input("Nombre del Pokémon (en inglés)")
-# Japonés ahora es la primera opción por defecto
 with col_reg2: nota_idioma = st.selectbox("Versión / Idioma", ["Japonés", "Inglés", "Chino Simplificado", "Otro"], key="add_idioma")
 
 if st.button("Añadir al Binder"):
     if not nuevo_nombre: st.warning("Por favor, escribe un nombre.")
     else:
-        nuevo_dex = obtener_numero_dex(nuevo_nombre)
+        with st.spinner("Buscando en la Pokédex..."):
+            nuevo_dex = obtener_numero_dex(nuevo_nombre)
+            
         if nuevo_dex is None: st.error("❌ No se encontró el Pokémon.")
         elif nuevo_dex == 1025: st.warning("⚠️ Pecharunt (#1025) excede los 1024 espacios.")
         elif nuevo_dex in df['Dex'].values: st.error(f"¡Ya tienes a {nuevo_nombre.capitalize()}!")
@@ -94,7 +116,11 @@ if st.button("Añadir al Binder"):
             pag, slot = calcular_posicion(nuevo_dex)
             nueva_fila = pd.DataFrame([{"Dex": nuevo_dex, "Nombre": nuevo_nombre.capitalize(), "Pagina": pag, "Slot": slot, "Idioma/Nota": nota_idioma}])
             df = pd.concat([df, nueva_fila], ignore_index=True).sort_values(by="Dex")
-            df.to_csv(DATA_FILE, index=False)
+            
+            # --- GUARDADO EN GOOGLE SHEETS ---
+            conn.update(worksheet="Datos", data=df)
+            st.cache_data.clear() # Limpia la caché para obligar a descargar los datos frescos
+            
             st.success(f"✅ ¡{nuevo_nombre.capitalize()} añadido en Página {pag}, espacio {slot}!")
             time.sleep(1)
             st.rerun()
@@ -132,7 +158,6 @@ st.divider()
 # --- SECCIÓN 4: HERRAMIENTAS OCULTAS (EXPANDERS) ---
 st.header("🛠️ Herramientas de Gestión")
 
-# Expander 1: Editar Carta
 with st.expander("✏️ Editar carta registrada"):
     if not df.empty:
         ce1, ce2, ce3 = st.columns([2, 2, 1])
@@ -146,35 +171,33 @@ with st.expander("✏️ Editar carta registrada"):
             if st.button("Actualizar"):
                 dex_edit = int(carta_seleccionada.split(" - ")[0])
                 df.loc[df['Dex'] == dex_edit, 'Idioma/Nota'] = nuevo_idioma
-                df.to_csv(DATA_FILE, index=False)
+                
+                # --- ACTUALIZADO EN GOOGLE SHEETS ---
+                conn.update(worksheet="Datos", data=df)
+                st.cache_data.clear()
+                
                 st.success("✅ Carta actualizada")
                 time.sleep(1)
                 st.rerun()
     else:
         st.info("Aún no tienes cartas.")
 
-# Expander 2: Progreso por página
 with st.expander("🔍 Consultar progreso hasta cierta página"):
     max_pag = st.slider("Página límite", 1, 64, 64)
     if not df.empty:
         df_filtrado = df[df['Pagina'] <= max_pag]
         st.info(f"Hasta la página {max_pag}, tienes **{len(df_filtrado)}** cartas de {max_pag * 16} posibles.")
 
-# Expander 3: Porcentaje por Idioma
 with st.expander("🌐 Porcentaje por Idioma"):
     if not df.empty:
-        # Calcular el porcentaje de cada idioma
         conteo_idiomas = df['Idioma/Nota'].value_counts(normalize=True) * 100
         df_idiomas = conteo_idiomas.reset_index()
         df_idiomas.columns = ['Idioma / Versión', 'Porcentaje']
-        
-        # Formatear la columna de porcentaje para que se vea como "45.0%"
         df_idiomas['Porcentaje'] = df_idiomas['Porcentaje'].apply(lambda x: f"{x:.1f}%")
-        
         st.dataframe(df_idiomas, use_container_width=True, hide_index=True)
     else:
         st.info("Aún no tienes cartas para calcular porcentajes.")
 
-# Expander 4: Inventario Total
 with st.expander("📋 Ver inventario completo"):
-    st.dataframe(df, use_container_width=True, hide_index=True)
+    if not df.empty:
+        st.dataframe(df, use_container_width=True, hide_index=True)
