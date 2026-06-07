@@ -16,15 +16,23 @@ st.title("📕 Dashboard del Binder: Pokédex Nacional")
 # --- CONEXIÓN A GOOGLE SHEETS ---
 conn = st.connection("gsheets", type=GSheetsConnection)
 
-# Leemos la base de datos (ttl=0 asegura que siempre leamos la versión más reciente)
 try:
+    # Intentamos leer la hoja llamada "Datos"
     df = conn.read(worksheet="Datos", ttl=0, usecols=[0, 1, 2, 3, 4])
-    df = df.dropna(how="all") # Limpiamos filas vacías
+    
+    # Eliminamos cualquier fila fantasma que no tenga número de Pokédex
+    df = df.dropna(subset=['Dex']) 
+    
     if not df.empty:
-        df['Dex'] = df['Dex'].astype(int) # Aseguramos que el número Dex sea entero
+        # Aseguramos que los números sean enteros y no decimales
+        df['Dex'] = df['Dex'].astype(int) 
         df['Pagina'] = df['Pagina'].astype(int)
         df['Slot'] = df['Slot'].astype(int)
-except:
+        
+except Exception as e:
+    # Si algo falla, mostrará un cuadro rojo detallando el error
+    st.error(f"Hubo un problema al leer el archivo: {e}")
+    st.info("💡 Tip: Revisa que la pestaña en la parte de abajo de tu Google Sheet se llame exactamente 'Datos'.")
     df = pd.DataFrame(columns=["Dex", "Nombre", "Pagina", "Slot", "Idioma/Nota"])
 
 # --- LÓGICA DEL BINDER Y GENERACIONES ---
