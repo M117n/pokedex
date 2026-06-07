@@ -20,7 +20,7 @@ try:
     df = conn.read(ttl=0)
 
     # Si tienes múltiples hojas:
-    # df = conn.read(worksheet="Datos")
+    df = conn.read(worksheet="Datos")
 
     df = df.dropna(subset=['Dex'])
 
