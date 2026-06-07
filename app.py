@@ -9,17 +9,6 @@ from streamlit_gsheets import GSheetsConnection
 # --- CONFIGURACIÓN ---
 st.set_page_config(page_title="Gestor de Pokédex TCG", layout="wide", page_icon="📕")
 
-# --- SISTEMA DE SEGURIDAD ---
-st.title("🔐 Acceso al Binder")
-contrasena = st.text_input("Ingresa la contraseña para acceder a tu colección:", type="password")
-
-# Cambia "Pikachu123" por tu contraseña segura
-if contrasena != "123":
-    if contrasena:
-        st.error("Contraseña incorrecta.")
-    st.stop() # Esto detiene la ejecución si no hay contraseña o es incorrecta
-
-st.success("Acceso concedido.")
 st.divider()
 
 st.title("📕 Dashboard del Binder: Pokédex Nacional")
