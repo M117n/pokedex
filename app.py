@@ -18,6 +18,7 @@ conn = st.connection("gsheets", type=GSheetsConnection)
 
 try:
     df = conn.read(
+        spreadsheet="Datos",  # Add this line
         worksheet="Datos",
         ttl=0
     )
