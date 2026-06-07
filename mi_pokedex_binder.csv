@@ -1,0 +1,235 @@
+Dex,Nombre,Pagina,Slot,Idioma/Nota
+1,Bulbasaur,1.0,1.0,Japonés
+4,Charmander,1.0,4.0,Chino Simplificado
+6,Charizard,1.0,6.0,Chino Simplificado
+19,Rattata,2.0,3.0,Inglés
+35,Clefairy,3.0,3.0,Japonés
+37,Vulpix,3.0,5.0,Japonés
+41,Zubat,3.0,9.0,Japonés
+42,Golbat,3.0,10.0,Japonés
+43,Oddish,3.0,11.0,Inglés
+44,Gloom,3.0,12.0,Chino Simplificado
+50,Diglett,4.0,2.0,Japonés
+52,Meowth,4.0,4.0,Japonés
+53,Persian,4.0,5.0,Japonés
+63,Abra,4.0,15.0,Japonés
+81,Magnemite,6.0,1.0,Japonés
+82,Magneton,6.0,2.0,Japonés
+94,Gengar,6.0,14.0,Chino Simplificado
+95,Onix,6.0,15.0,Japonés
+96,Drowzee,6.0,16.0,Japonés
+97,Hypno,7.0,1.0,Japonés
+102,Exeggcute,7.0,6.0,Japonés
+103,Exeggutor,7.0,7.0,Japonés
+104,Cubone,7.0,8.0,Japonés
+105,Marowak,7.0,9.0,Japonés
+112,Rhydon,7.0,16.0,Japonés
+117,Seadra,8.0,5.0,Japonés
+120,Staryu,8.0,8.0,Japonés
+121,Starmie,8.0,9.0,Japonés
+124,Jynx,8.0,12.0,Japonés
+125,Electabuzz,8.0,13.0,Japonés
+128,Tauros,8.0,16.0,Japonés
+131,Lapras,9.0,3.0,Chino Simplificado
+133,Eevee,9.0,5.0,Japonés
+163,Hoothoot,11.0,3.0,Japonés
+164,Noctowl,11.0,4.0,Japonés
+169,Crobat,11.0,9.0,Japonés
+170,Chinchou,11.0,10.0,Japonés
+175,Togepi,11.0,15.0,Japonés
+176,Togetic,11.0,16.0,Japonés
+177,Natu,12.0,1.0,Chino Simplificado
+182,Bellossom,12.0,6.0,Chino Simplificado
+183,Marill,12.0,7.0,Inglés
+193,Yanma,13.0,1.0,Japonés
+194,Wooper,13.0,2.0,Japonés
+199,Slowking,13.0,7.0,Japonés
+200,Misdreavus,13.0,8.0,Japonés
+207,Gligar,13.0,15.0,Chino Simplificado
+213,Shuckle,14.0,5.0,Japonés
+215,Sneasel,14.0,7.0,Japonés
+219,Magcargo,14.0,11.0,Inglés
+223,Remoraid,14.0,15.0,Chino Simplificado
+224,Octillery,14.0,16.0,Chino Simplificado
+228,Houndour,15.0,4.0,Japonés
+229,Houndoom,15.0,5.0,Chino Simplificado
+231,Phanpy,15.0,7.0,Japonés
+232,Donphan,15.0,8.0,Chino Simplificado
+236,Tyrogue,15.0,12.0,Japonés
+259,Marshtomp,17.0,3.0,Japonés
+264,Linoone,17.0,8.0,Chino Simplificado
+266,Silcoon,17.0,10.0,Japonés
+267,Beautifly,17.0,11.0,Japonés
+273,Seedot,18.0,1.0,Japonés
+299,Nosepass,19.0,11.0,Chino Simplificado
+303,Mawile,19.0,15.0,Inglés
+307,Meditite,20.0,3.0,Japonés
+311,Plusle,20.0,7.0,Chino Simplificado
+316,Gulpin,20.0,12.0,Japonés
+317,Swalot,20.0,13.0,Japonés
+318,Carvanha,20.0,14.0,Chino Simplificado
+319,Sharpedo,20.0,15.0,Chino Simplificado
+322,Numel,21.0,2.0,Japonés
+323,Camerupt,21.0,3.0,Japonés
+326,Grumpig,21.0,6.0,Japonés
+338,Solrock,22.0,2.0,Japonés
+343,Baltoy,22.0,7.0,Japonés
+345,Lileep,22.0,9.0,Japonés
+346,Cradily,22.0,10.0,Japonés
+349,Feebas,22.0,13.0,Japonés
+355,Duskull,23.0,3.0,Japonés
+356,Dusclops,23.0,4.0,Japonés
+359,Absol,23.0,7.0,Japonés
+383,Groudon,24.0,15.0,Chino Simplificado
+385,Jirachi,25.0,1.0,Chino Simplificado
+386,Deoxys-normal,25.0,2.0,Chino Simplificado
+399,Bidoof,25.0,15.0,Japonés
+417,Pachirisu,27.0,1.0,Japonés
+426,Drifblim,27.0,10.0,Japonés
+432,Purugly,27.0,16.0,Japonés
+442,Spiritomb,28.0,10.0,Japonés
+443,Gible,28.0,11.0,Chino Simplificado
+444,Gabite,28.0,12.0,Chino Simplificado
+447,Riolu,28.0,15.0,Japonés
+450,Hippowdon ,29.0,2.0,Japonés
+452,Drapion ,29.0,4.0,Inglés
+453,Croagunk ,29.0,5.0,Japonés
+454,Toxicroak ,29.0,6.0,Japonés
+455,Carnivine ,29.0,7.0,Japonés
+456,Finneon,29.0,8.0,Japonés
+457,Lumineon ,29.0,9.0,Japonés
+458,Mantyke ,29.0,10.0,Chino Simplificado
+466,Electivire ,30.0,2.0,Japonés
+476,Probopass,30.0,12.0,Chino Simplificado
+479,Rotom ,30.0,15.0,Japonés
+483,Dialga ,31.0,3.0,Japonés
+484,Palkia ,31.0,4.0,Chino Simplificado
+492,Shaymin-land,31.0,12.0,Japonés
+496,Servine ,31.0,16.0,Japonés
+497,Serperior ,32.0,1.0,Inglés
+517,Munna,33.0,5.0,Japonés
+541,Swadloon,34.0,13.0,Japonés
+551,Sandile ,35.0,7.0,Japonés
+554,Darumaka ,35.0,10.0,Chino Simplificado
+555,Darmanitan-standard,35.0,11.0,Chino Simplificado
+559,Scraggy ,35.0,15.0,Chino Simplificado
+570,Zorua ,36.0,10.0,Japonés
+571,Zoroark ,36.0,11.0,Japonés
+591,Amoonguss,37.0,15.0,Japonés
+595,Joltik ,38.0,3.0,Japonés
+596,Galvantula,38.0,4.0,Japonés
+597,Ferroseed ,38.0,5.0,Chino Simplificado
+600,Klang ,38.0,8.0,Japonés
+602,Tynamo ,38.0,10.0,Chino Simplificado
+603,Eelektrik ,38.0,11.0,Chino Simplificado
+604,Eelektross ,38.0,12.0,Chino Simplificado
+605,Elgyem ,38.0,13.0,Japonés
+606,Beheeyem ,38.0,14.0,Japonés
+610,Axew ,39.0,2.0,Japonés
+611,Fraxure ,39.0,3.0,Japonés
+612,Haxorus ,39.0,4.0,Japonés
+613,Cubchoo ,39.0,5.0,Japonés
+618,Stunfisk ,39.0,10.0,Japonés
+619,Mienfoo ,39.0,11.0,Japonés
+620,Mienshao ,39.0,12.0,Japonés
+624,Pawniard ,39.0,16.0,Japonés
+625,Bisharp ,40.0,1.0,Japonés
+626,Bouffalant ,40.0,2.0,Japonés
+629,Vullaby,40.0,5.0,Japonés
+637,Volcarona ,40.0,13.0,Japonés
+641,Tornadus-incarnate,41.0,1.0,Japonés
+646,Kyurem ,41.0,6.0,Japonés
+649,Genesect ,41.0,9.0,Japonés
+651,Quilladin ,41.0,11.0,Japonés
+660,Diggersby ,42.0,4.0,Inglés
+661,Fletchling ,42.0,5.0,Japonés
+662,Fletchinder ,42.0,6.0,Japonés
+665,Spewpa ,42.0,9.0,Japonés
+666,Vivillon,42.0,10.0,Japonés
+667,Litleo ,42.0,11.0,Japonés
+669,Flabebe,42.0,13.0,Japonés
+674,Pancham ,43.0,2.0,Japonés
+675,Pangoro ,43.0,3.0,Japonés
+676,Furfrou ,43.0,4.0,Inglés
+677,Espurr ,43.0,5.0,Japonés
+679,Honedge,43.0,7.0,Chino Simplificado
+680,Doublade ,43.0,8.0,Inglés
+681,Aegislash-shield,43.0,9.0,Japonés
+683,Aromatisse ,43.0,11.0,Inglés
+686,Inkay ,43.0,14.0,Japonés
+687,Malamar ,43.0,15.0,Japonés
+688,Binacle ,43.0,16.0,Japonés
+689,Barbaracle ,44.0,1.0,Inglés
+695,Heliolisk ,44.0,7.0,Japonés
+700,Sylveon ,44.0,12.0,Japonés
+701,Hawlucha ,44.0,13.0,Japonés
+703,Carbink ,44.0,15.0,Inglés
+707,Klefki ,45.0,3.0,Inglés
+709,Trevenant,45.0,5.0,Chino Simplificado
+712,Bergmite ,45.0,8.0,Japonés
+715,Noivern ,45.0,11.0,Japonés
+717,Yveltal ,45.0,13.0,Japonés
+719,Diancie ,45.0,15.0,Japonés
+722,Rowlet,46.0,2.0,Japonés
+723,Dartrix ,46.0,3.0,Japonés
+724,Decidueye ,46.0,4.0,Japonés
+734,Yungoos ,46.0,14.0,Japonés
+736,Grubbin ,46.0,16.0,Japonés
+737,Charjabug ,47.0,1.0,Japonés
+739,Crabrawler ,47.0,3.0,Japonés
+740,Crabominable ,47.0,4.0,Japonés
+758,Salazzle ,48.0,6.0,Japonés
+759,Stufful ,48.0,7.0,Japonés
+760,Bewear ,48.0,8.0,Japonés
+764,Comfey ,48.0,12.0,Japonés
+765,Oranguru ,48.0,13.0,Japonés
+767,Wimpod ,48.0,15.0,Chino Simplificado
+776,Turtonator ,49.0,8.0,Japonés
+781,Dhelmise ,49.0,13.0,Japonés
+809,Melmetal ,51.0,9.0,Japonés
+813,Scorbunny ,51.0,13.0,Japonés
+814,Raboot ,51.0,14.0,Japonés
+817,Drizzile ,52.0,1.0,Japonés
+818,Inteleon ,52.0,2.0,Japonés
+827,Nickit ,52.0,11.0,Chino Simplificado
+829,Gossifleur ,52.0,13.0,Japonés
+830,Eldegoss,52.0,14.0,Japonés
+831,Wooloo ,52.0,15.0,Japonés
+833,Chewtle ,53.0,1.0,Japonés
+845,Cramorant ,53.0,13.0,Japonés
+859,Impidimp ,54.0,11.0,Japonés
+860,Morgrem ,54.0,12.0,Japonés
+870,Falinks ,55.0,6.0,Japonés
+872,Snom ,55.0,8.0,Japonés
+874,Stonjourner ,55.0,10.0,Japonés
+878,Cufant ,55.0,14.0,Japonés
+901,Ursaluna ,57.0,5.0,Japonés
+912,Quaxly ,57.0,16.0,Japonés
+915,Lechonk ,58.0,3.0,Chino Simplificado
+926,Fidough ,58.0,14.0,Japonés
+935,Charcadet ,59.0,7.0,Japonés
+938,Tadbulb ,59.0,10.0,Japonés
+940,Wattrel ,59.0,12.0,Japonés
+944,Shroodle ,59.0,16.0,Japonés
+945,Grafaiai ,60.0,1.0,Japonés
+948,Toedscool,60.0,4.0,Chino Simplificado
+949,Toedscruel ,60.0,5.0,Chino Simplificado
+965,Varoom ,61.0,5.0,Japonés
+966,Revavroom ,61.0,6.0,Japonés
+969,Glimmet,61.0,9.0,Chino Simplificado
+970,Glimmora ,61.0,10.0,Chino Simplificado
+972,Houndstone ,61.0,12.0,Chino Simplificado
+973,Flamigo ,61.0,13.0,Chino Simplificado
+976,Veluza ,61.0,16.0,Japonés
+977,Dondozo ,62.0,1.0,Chino Simplificado
+983,Kingambit ,62.0,7.0,Chino Simplificado
+988,Slither-wing,62.0,12.0,Japonés
+994,Iron-moth,63.0,2.0,Japonés
+999,Gimmighoul ,63.0,7.0,Japonés
+1001,Wo-chien,63.0,9.0,Japonés
+1004,Chi-yu,63.0,12.0,Chino Simplificado
+1007,Koraidon ,63.0,15.0,Japonés
+1011,Dipplin ,64.0,3.0,Japonés
+1014,Okidogi,64.0,6.0,Japonés
+1016,Fezandipiti ,64.0,8.0,Japonés
+10136,Minior-red,,,Chino Simplificado
