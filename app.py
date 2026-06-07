@@ -17,20 +17,20 @@ st.title("📕 Dashboard del Binder: Pokédex Nacional")
 conn = st.connection("gsheets", type=GSheetsConnection)
 
 try:
-    df = conn.read(
-        spreadsheet="Datos",
-        ttl=0,
-        usecols=[0, 1, 2, 3, 4]
-    )
-    
-    # Eliminamos cualquier fila fantasma que no tenga número de Pokédex
-    df = df.dropna(subset=['Dex']) 
-    
+    df = conn.read(ttl=0)
+
+    # Si tienes múltiples hojas:
+    # df = conn.read(worksheet="Datos")
+
+    df = df.dropna(subset=['Dex'])
+
     if not df.empty:
-        # Aseguramos que los números sean enteros y no decimales
-        df['Dex'] = df['Dex'].astype(int) 
+        df['Dex'] = df['Dex'].astype(int)
         df['Pagina'] = df['Pagina'].astype(int)
         df['Slot'] = df['Slot'].astype(int)
+
+except Exception as e:
+    st.error(f"Hubo un problema al leer el archivo: {e}")
         
 except Exception as e:
     # Si algo falla, mostrará un cuadro rojo detallando el error
