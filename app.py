@@ -22,20 +22,23 @@ try:
         ttl=0
     )
 
-    # Si la hoja está vacía
+    # Si la hoja está vacía por completo
     if df is None:
         df = pd.DataFrame(
             columns=["Dex", "Nombre", "Pagina", "Slot", "Idioma/Nota"]
         )
 
-    # Eliminar filas vacías
+    # Limpiar y convertir datos
     if not df.empty:
-        df = df.dropna(subset=['Dex'])
+        # 1. Forzamos la conversión a números. Si hay celdas vacías o texto raro, se vuelven NaN (nulos)
+        df['Dex'] = pd.to_numeric(df['Dex'], errors='coerce')
+        df['Pagina'] = pd.to_numeric(df['Pagina'], errors='coerce')
+        df['Slot'] = pd.to_numeric(df['Slot'], errors='coerce')
 
-        df['Dex'] = pd.to_numeric(df['Dex'])
-        df['Pagina'] = pd.to_numeric(df['Pagina'])
-        df['Slot'] = pd.to_numeric(df['Slot'])
+        # 2. Eliminamos CUALQUIER fila que tenga nulos en estas tres columnas vitales
+        df = df.dropna(subset=['Dex', 'Pagina', 'Slot'])
 
+        # 3. Ahora que estamos 100% seguros de que solo hay números limpios, convertimos a enteros
         df['Dex'] = df['Dex'].astype(int)
         df['Pagina'] = df['Pagina'].astype(int)
         df['Slot'] = df['Slot'].astype(int)
