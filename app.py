@@ -17,11 +17,10 @@ st.title("📕 Dashboard del Binder: Pokédex Nacional")
 conn = st.connection("gsheets", type=GSheetsConnection)
 
 try:
-    df = conn.read(
-        spreadsheet="Datos",  # Add this line
-        worksheet="Datos",
-        ttl=0
-    )
+        df = conn.read(
+            worksheet="Datos",
+            ttl=0
+        )
 
     # Si la hoja está vacía
     if df is None:
@@ -134,7 +133,7 @@ if st.button("Añadir al Binder"):
             df = pd.concat([df, nueva_fila], ignore_index=True).sort_values(by="Dex")
             
             # --- GUARDADO EN GOOGLE SHEETS ---
-            conn.update(spreadsheet="Datos", data=df)
+            conn.update(worksheet="Datos", data=df)
             st.cache_data.clear() # Limpia la caché para obligar a descargar los datos frescos
             
             st.success(f"✅ ¡{nuevo_nombre.capitalize()} añadido en Página {pag}, espacio {slot}!")
@@ -189,7 +188,7 @@ with st.expander("✏️ Editar carta registrada"):
                 df.loc[df['Dex'] == dex_edit, 'Idioma/Nota'] = nuevo_idioma
                 
                 # --- ACTUALIZADO EN GOOGLE SHEETS ---
-                conn.update(spreadsheet="Datos", data=df)
+                conn.update(worksheet="Datos", data=df)
                 st.cache_data.clear()
                 
                 st.success("✅ Carta actualizada")
