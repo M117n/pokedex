@@ -17,10 +17,10 @@ st.title("📕 Dashboard del Binder: Pokédex Nacional")
 conn = st.connection("gsheets", type=GSheetsConnection)
 
 try:
-        df = conn.read(
-            worksheet="Datos",
-            ttl=0
-        )
+    df = conn.read(
+        worksheet="Datos",
+        ttl=0
+    )
 
     # Si la hoja está vacía
     if df is None:
@@ -40,13 +40,6 @@ try:
         df['Pagina'] = df['Pagina'].astype(int)
         df['Slot'] = df['Slot'].astype(int)
 
-except Exception as e:
-    st.exception(e)
-
-    df = pd.DataFrame(
-        columns=["Dex", "Nombre", "Pagina", "Slot", "Idioma/Nota"]
-    )
-        
 except Exception as e:
     # Si algo falla, mostrará un cuadro rojo detallando el error
     st.error(f"Hubo un problema al leer el archivo: {e}")
