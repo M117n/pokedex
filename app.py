@@ -60,7 +60,16 @@ def obtener_numero_dex(nombre_pokemon):
     url = f"https://pokeapi.co/api/v2/pokemon/{nombre_pokemon.lower().strip()}"
     try:
         res = requests.get(url)
-        if res.status_code == 200: return res.json()['id']
+        if res.status_code == 200:
+            datos = res.json()
+            # En lugar de usar datos['id'] (que puede ser > 10000), 
+            # buscamos la URL de la especie base que contiene el ID de la Pokédex Nacional
+            url_especie = datos['species']['url']
+            
+            # La URL siempre tiene este formato: "https://pokeapi.co/api/v2/pokemon-species/774/"
+            # Cortamos la URL para extraer solo ese número final
+            id_real = int(url_especie.rstrip('/').split('/')[-1])
+            return id_real
     except:
         pass
     return None
