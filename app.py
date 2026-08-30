@@ -1,6 +1,7 @@
 import streamlit as st
 import pandas as pd
 import math
+import random
 import plotly.express as px
 import requests
 import time
@@ -91,6 +92,47 @@ totales_por_gen = {
     "Gen 7 (Alola)": 88, "Gen 8 (Galar)": 96, "Gen 9 (Paldea)": 120
 }
 
+# --- LÓGICA DEL CAZADOR DE POKÉMON FALTANTES ---
+def obtener_pokemones_faltantes(df):
+    """Devuelve la lista ordenada de números de Dex (1-1024) que aún NO están registrados."""
+    todos_los_dex = set(range(1, 1025))
+    registrados = set(df['Dex'].values) if not df.empty else set()
+    faltantes = sorted(todos_los_dex - registrados)
+    return faltantes
+
+def elegir_pokemones_al_azar(lista_faltantes, cantidad=10):
+    """Elige aleatoriamente 'cantidad' números de Dex de la lista de faltantes."""
+    if not lista_faltantes:
+        return []
+    cantidad = min(cantidad, len(lista_faltantes))
+    return sorted(random.sample(lista_faltantes, cantidad))
+
+@st.cache_data(show_spinner=False)
+def obtener_nombre_por_dex(dex_num):
+    """Consulta la PokeAPI para obtener el nombre en inglés a partir del número de Dex Nacional."""
+    url = f"https://pokeapi.co/api/v2/pokemon-species/{dex_num}/"
+    try:
+        res = requests.get(url)
+        if res.status_code == 200:
+            datos = res.json()
+            for entrada in datos.get('names', []):
+                if entrada['language']['name'] == 'en':
+                    return entrada['name']
+            return datos.get('name', '').capitalize()
+    except:
+        pass
+    return f"Pokémon #{dex_num}"
+
+def _generar_nueva_lista_caza(df):
+    """Genera y guarda en session_state una nueva lista de 10 pokémon faltantes al azar."""
+    faltantes = obtener_pokemones_faltantes(df)
+    if not faltantes:
+        st.session_state.lista_caza = []
+        return
+    seleccion = elegir_pokemones_al_azar(faltantes, 10)
+    with st.spinner("Buscando nombres en la Pokédex..."):
+        st.session_state.lista_caza = [(dex, obtener_nombre_por_dex(dex)) for dex in seleccion]
+
 # --- SECCIÓN 1: ESTADÍSTICAS GENERALES ---
 st.header("📈 Estadísticas Generales")
 if not df.empty:
@@ -119,6 +161,10 @@ st.divider()
 
 # --- SECCIÓN 2: REGISTRO DE CARTAS ---
 st.header("➕ Registrar nueva carta")
+
+if "ultimo_registro" not in st.session_state:
+    st.session_state.ultimo_registro = None
+
 col_reg1, col_reg2 = st.columns(2)
 with col_reg1: nuevo_nombre = st.text_input("Nombre del Pokémon (en inglés)")
 with col_reg2: nota_idioma = st.selectbox("Versión / Idioma", ["Japonés", "Inglés", "Chino Simplificado", "Otro"], key="add_idioma")
@@ -141,8 +187,72 @@ if st.button("Añadir al Binder"):
             conn.update(worksheet="Datos", data=df)
             st.cache_data.clear() # Limpia la caché para obligar a descargar los datos frescos
             
-            st.success(f"✅ ¡{nuevo_nombre.capitalize()} añadido en Página {pag}, espacio {slot}!")
+            # Guardamos la ubicación en session_state para que NO desaparezca al hacer rerun.
+            # Así queda como "último registro" hasta que se registre otra carta o el usuario lo cierre.
+            st.session_state.ultimo_registro = {
+                "nombre": nuevo_nombre.capitalize(),
+                "dex": nuevo_dex,
+                "pagina": pag,
+                "slot": slot
+            }
+            
             time.sleep(1)
+            st.rerun()
+
+# --- AVISO PERSISTENTE: UBICACIÓN DEL ÚLTIMO REGISTRO ---
+if st.session_state.ultimo_registro:
+    reg = st.session_state.ultimo_registro
+    col_aviso, col_aviso_cerrar = st.columns([6, 1])
+    with col_aviso:
+        st.info(
+            f"📍 **Último registro:** {reg['nombre']} (#{reg['dex']:04d}) → "
+            f"**Página {reg['pagina']}, espacio {reg['slot']}**. "
+            f"Tómate tu tiempo para colocar la carta física en el binder."
+        )
+    with col_aviso_cerrar:
+        st.write("")
+        if st.button("✖️", help="Ocultar aviso", key="cerrar_ultimo_registro"):
+            st.session_state.ultimo_registro = None
+            st.rerun()
+
+st.divider()
+
+# --- SECCIÓN 2.5: CAZADOR DE POKÉMON FALTANTES ---
+st.header("🎯 Cazador de Pokémon Faltantes")
+st.caption("¿Qué agregamos esta vez?.")
+
+if "lista_caza" not in st.session_state:
+    st.session_state.lista_caza = None
+
+faltantes_actuales = obtener_pokemones_faltantes(df)
+st.caption(f"Actualmente te faltan **{len(faltantes_actuales)}** Pokémon por registrar.")
+
+if st.session_state.lista_caza is None:
+    if st.button("🎲 Generar lista de caza"):
+        _generar_nueva_lista_caza(df)
+        st.rerun()
+else:
+    if len(st.session_state.lista_caza) == 0:
+        st.success("🎉 ¡Felicidades! Ya tienes registrados los 1024 Pokémon. No queda nada por cazar.")
+    else:
+        st.write("Aquí tienes **10 Pokémon** que te faltan. ¡Suerte cazando! 🎒")
+        cols_caza = st.columns(5)
+        for i, (dex, nombre) in enumerate(st.session_state.lista_caza):
+            with cols_caza[i % 5]:
+                st.image(
+                    f"https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/{dex}.png",
+                    use_container_width=True
+                )
+                st.markdown(f"**#{dex:04d}**  \n{nombre}")
+
+    col_caza_btn1, col_caza_btn2 = st.columns(2)
+    with col_caza_btn1:
+        if st.button("🔄 Regenerar lista"):
+            _generar_nueva_lista_caza(df)
+            st.rerun()
+    with col_caza_btn2:
+        if st.button("🗑️ Quitar lista"):
+            st.session_state.lista_caza = None
             st.rerun()
 
 st.divider()
